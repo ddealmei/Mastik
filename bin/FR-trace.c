@@ -319,15 +319,15 @@ int main(int ac, char **av) {
 
   if (c.affinity != -1)
     setaffinity(c.affinity);
-    for (int r = 0; r < c.runs; r++) {
-      int l = fr_trace(fr, c.samples, res, c.slot, c.threshold, c.idle);
 
-    char *outfile=NULL;
-    if (c.outfilenameformat != NULL)
-      asprintf(&outfile, c.outfilenameformat, r);
-    printdata(outfile, &c, l, res, r, fr);
-    if (c.outfilenameformat != NULL)
-      free(outfile);
+  for (int r = 0; r < c.runs; r++) {
+      int l = fr_trace(fr, c.samples, res, c.slot, c.threshold, c.idle);
+      char *outfile=NULL;
+      if (c.outfilenameformat != NULL)
+        asprintf(&outfile, c.outfilenameformat, r);
+      printdata(outfile, &c, l, res, r, fr);
+      if (c.outfilenameformat != NULL)
+        free(outfile);
   }
 
   if (c.pdacount > 0) {
