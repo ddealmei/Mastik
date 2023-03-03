@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Mastik.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+#define _GNU_SOURCE
 #include "config.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <sched.h>
 #include <assert.h>
 #include <unistd.h>
 #include <signal.h>
@@ -159,6 +160,15 @@ static void setautodeath() {
 #endif
 }
 
+static void setcpuaffinity() {
+#ifdef PDA_PIN_TO_CORE
+  cpu_set_t my_set;      
+  CPU_ZERO(&my_set);
+  CPU_SET(PDA_PIN_TO_CORE, &my_set);
+  sched_setaffinity(0, sizeof(cpu_set_t), &my_set);
+#endif
+}
+
 void pda_activate(pda_t pda) {
   if (pda->active) {
     if (!pda->modified)
@@ -175,6 +185,7 @@ void pda_activate(pda_t pda) {
       return;
     case 0:
       setautodeath();
+      setcpuaffinity();
       pda_flush(pda);
       // unreached
     default:

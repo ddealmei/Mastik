@@ -20,6 +20,13 @@
 #ifndef __PDA_H__
 #define __PDA_H__ 1
 
+ /* On my system (4 phy, 8 log), cores are distributed as follows:
+  *     - 0 and 4 on physical core 0
+  *     - 1 and 5 on physical core 1
+  *     - 2 and 6 on physical core 2
+  *     - 3 and 7 on physical core 3
+  */
+#define PDA_PIN_TO_CORE 4
 
 /*
  * Perfoms a performance degradation attack.
