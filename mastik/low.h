@@ -51,7 +51,7 @@ static inline uint32_t memaccesstime(void *v) {
 }
 
 static inline void clflush(void *v) {
-  asm volatile ("clflush 0(%0)": : "r" (v):);
+  asm volatile ("clflushopt 0(%0)": : "r" (v):);
 }
 
 static inline uint32_t rdtscp() {
